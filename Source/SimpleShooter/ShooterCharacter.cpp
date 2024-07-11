@@ -48,6 +48,12 @@ void AShooterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 		TEXT("LookRight"),
 		this,
 		&APawn::AddControllerYawInput);
+
+	PlayerInputComponent->BindAction(
+		TEXT("Jump"),
+		IE_Pressed,
+		this,
+		&ACharacter::Jump);
 }
 
 void AShooterCharacter::MoveForward(const float AxisValue)
