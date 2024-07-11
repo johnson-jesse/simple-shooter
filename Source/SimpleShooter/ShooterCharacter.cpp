@@ -19,7 +19,7 @@ void AShooterCharacter::BeginPlay()
 }
 
 // Called every frame
-void AShooterCharacter::Tick(float DeltaTime)
+void AShooterCharacter::Tick(const float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
@@ -29,6 +29,33 @@ void AShooterCharacter::Tick(float DeltaTime)
 void AShooterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	PlayerInputComponent->BindAxis(
+		TEXT("MoveForward"),
+		this,
+		&AShooterCharacter::MoveForward);
 
+	PlayerInputComponent->BindAxis(
+		TEXT("MoveRight"),
+		this,
+		&AShooterCharacter::MoveRight);
+
+	PlayerInputComponent->BindAxis(
+		TEXT("LookUp"),
+		this,
+		&APawn::AddControllerPitchInput);
+
+	PlayerInputComponent->BindAxis(
+		TEXT("LookRight"),
+		this,
+		&APawn::AddControllerYawInput);
 }
 
+void AShooterCharacter::MoveForward(const float AxisValue)
+{
+	AddMovementInput(GetActorForwardVector() * AxisValue);
+}
+
+void AShooterCharacter::MoveRight(const float AxisValue)
+{
+	AddMovementInput(GetActorRightVector() * AxisValue);
+}
