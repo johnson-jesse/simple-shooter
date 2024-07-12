@@ -16,6 +16,12 @@ void AShooterCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	Gun = GetWorld()->SpawnActor<AGun>(GunClass);
+
+	// No gun bone is on the mesh I chose for this tutorial since the requested one crashes UE5
+	// GetMesh()->HideBoneByName(TEXT("weapon_r"), PBO_None);
+
+	Gun->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("WeaponSocket"));
+	Gun->SetOwner(this);
 }
 
 // Called every frame
