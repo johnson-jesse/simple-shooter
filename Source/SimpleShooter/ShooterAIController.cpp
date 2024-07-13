@@ -3,7 +3,7 @@
 
 #include "ShooterAIController.h"
 
-#include "ShooterCharacter.h"
+#include "BehaviorTree/BlackboardComponent.h"
 #include "Kismet/GameplayStatics.h"
 
 void AShooterAIController::Tick(float DeltaTime)
@@ -30,5 +30,7 @@ void AShooterAIController::BeginPlay()
 	if (AIBehavior != nullptr)
 	{
 		RunBehaviorTree(AIBehavior);
+		APawn* Player = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+		GetBlackboardComponent()->SetValueAsVector(TEXT("PlayerLocation"), Player->GetActorLocation());
 	}
 }
