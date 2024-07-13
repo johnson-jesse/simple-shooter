@@ -12,6 +12,11 @@ AShooterCharacter::AShooterCharacter()
 	Health = -1.f;
 }
 
+bool AShooterCharacter::IsDead() const
+{
+	return Health <= 0;
+}
+
 // Called when the game starts or when spawned
 void AShooterCharacter::BeginPlay()
 {

@@ -16,6 +16,8 @@ class SIMPLESHOOTER_API AShooterCharacter : public ACharacter
 public:
 	// Sets default values for this character's properties
 	AShooterCharacter();
+	UFUNCTION(BlueprintPure)
+	bool IsDead() const;
 
 protected:
 	// Called when the game starts or when spawned
