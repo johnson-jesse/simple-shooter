@@ -9,12 +9,14 @@ AShooterCharacter::AShooterCharacter()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	Gun = nullptr;
+	Health = -1.f;
 }
 
 // Called when the game starts or when spawned
 void AShooterCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	Health = MaxHealth;
 	Gun = GetWorld()->SpawnActor<AGun>(GunClass);
 
 	// No gun bone is on the mesh I chose for this tutorial since the requested one crashes UE5
@@ -75,6 +77,15 @@ void AShooterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 		IE_Pressed,
 		this,
 		&AShooterCharacter::Shoot);
+}
+
+float AShooterCharacter::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser)
+{
+	float DamageToApply = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+	DamageToApply = FMath::Min(Health, DamageToApply);
+	Health -= DamageToApply;
+	UE_LOG(LogTemp, Warning, TEXT("DamageAmount: %f DamageToApply: %f Health: %f"), DamageAmount, DamageToApply, Health);
+	return Health;
 }
 
 void AShooterCharacter::MoveForward(const float AxisValue)
