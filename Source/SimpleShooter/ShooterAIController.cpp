@@ -3,11 +3,28 @@
 
 #include "ShooterAIController.h"
 
+#include "ShooterCharacter.h"
 #include "Kismet/GameplayStatics.h"
+
+void AShooterAIController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	APawn* Player = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+	AShooterCharacter* AI = Cast<AShooterCharacter>(GetPawn());
+	
+	if (!AI->IsDead() && LineOfSightTo(Player))
+	{
+		SetFocus(Player);
+		MoveToActor(Player, 200);
+	}
+	else
+	{
+		ClearFocus(EAIFocusPriority::Gameplay);
+		StopMovement();
+	}
+}
 
 void AShooterAIController::BeginPlay()
 {
 	Super::BeginPlay();
-	APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
-	SetFocus(PlayerPawn);
 }
