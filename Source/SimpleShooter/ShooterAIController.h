@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+// #include "CoreMinimal.h"
 #include "AIController.h"
 #include "ShooterAIController.generated.h"
 
@@ -20,5 +20,5 @@ protected:
 	virtual void BeginPlay() override;
 private:
 	UPROPERTY(EditAnywhere)
-	float AcceptanceRadius = 200.f;
+	class UBehaviorTree* AIBehavior;
 };
