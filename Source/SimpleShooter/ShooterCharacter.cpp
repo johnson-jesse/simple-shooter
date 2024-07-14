@@ -19,6 +19,13 @@ bool AShooterCharacter::IsDead() const
 	return Health <= 0;
 }
 
+float AShooterCharacter::GetHealthPercent() const
+{
+	float H = Health / MaxHealth;
+	UE_LOG(LogTemp, Warning, TEXT("Health: %f"), H);
+	return H;
+}
+
 // Called when the game starts or when spawned
 void AShooterCharacter::BeginPlay()
 {
@@ -91,7 +98,6 @@ float AShooterCharacter::TakeDamage(float DamageAmount, struct FDamageEvent cons
 	float DamageToApply = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 	DamageToApply = FMath::Min(Health, DamageToApply);
 	Health -= DamageToApply;
-	UE_LOG(LogTemp, Warning, TEXT("DamageAmount: %f DamageToApply: %f Health: %f"), DamageAmount, DamageToApply, Health);
 	if (IsDead())
 	{
 		ASimpleShooterGameMode* GameMode = GetWorld()->GetAuthGameMode<ASimpleShooterGameMode>();
