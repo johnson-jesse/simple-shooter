@@ -126,6 +126,5 @@ void AShooterCharacter::LookRightRate(const float AxisValue)
 
 void AShooterCharacter::Shoot()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Shooting..."));
 	Gun->PullTrigger();
 }
